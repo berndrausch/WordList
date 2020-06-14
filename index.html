@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>My first Vue app</title>
   <!-- <script src="https://unpkg.com/vue"></script> -->
   <script src="vue.js"></script>
 </head>
+
 <body>
   <div id="app">
     <p>{{ currentWord }}</p>
     <button v-if="startVisible" v-on:click="start">Start</button>
-    <button v-if="nextVisible" v-on:click="next">Next</button>
+    <button v-if="nextVisible" v-on:click="next(true)" style=background-color:green>Next</button>
+    <button v-if="nextVisible" v-on:click="next(false)" style=background-color:red>Next</button>
+    <button v-if="nextVisible" v-on:click="restart">Restart</button>
+    <p>Solved: {{ solved }}</p>
+    <p>Skipped: {{ skipped }}</p>
   </div>
 
   <script>
@@ -18,60 +24,85 @@
       data: {
         startVisible: true,
         nextVisible: false,
+        solved: 0,
+        skipped: 0,
         currentWordIndex: 0,
         currentWord: 'Ready?',
         words: [
-            { text: 'Word 0'},
-            { text: 'Word 1'},
-            { text: 'Word 2'},
-            { text: 'Word 3'},
-            { text: 'Word 4'},
-            { text: 'Word 5'},
-            { text: 'Word 6'},
-            { text: 'Word 7'},
+          { text: 'Word 0' },
+          { text: 'Word 1' },
+          { text: 'Word 2' },
+          { text: 'Word 3' },
+          { text: 'Word 4' },
+          { text: 'Word 5' },
+          { text: 'Word 6' },
+          { text: 'Word 7' },
         ],
         shuffled: []
       },
       methods: {
         start: function () {
-            this.startVisible = false;
-            this.nextVisible = true;
-            this.shuffled = this.shuffle(this.words.slice(0));
-            this.currentWordIndex = 0;
-            this.next();
+          this.startVisible = false;
+          this.nextVisible = true;
+          this.resetWords();
+          this.resetCount();
+          this.nextWord();
         },
-        next: function () {
-            if (this.currentWordIndex >= this.shuffled.length)
-            {
-                this.start();
-            }
-            else
-            {
-                this.currentWord = this.shuffled[this.currentWordIndex].text;
-                this.currentWordIndex++;
-            }
+        restart: function () {
+          this.resetCount();
+          this.nextWord();
+        },
+        resetCount: function () {
+          this.solved = 0;
+          this.skipped = 0;
+        },
+        increaseCounter: function(solved){
+          if (solved) {
+            this.solved++;
+          }
+          else {
+            this.skipped++;
+          }
+        },
+        resetWords: function () {
+          this.shuffled = this.shuffle(this.words.slice(0));
+          this.currentWordIndex = 0;
+        },
+        nextWord: function () {
+          this.currentWord = this.shuffled[this.currentWordIndex].text;
+          this.currentWordIndex++;
+        },
+        next: function (solved) {
+          this.increaseCounter (solved);
+
+          if (this.currentWordIndex >= this.shuffled.length) {
+            this.resetWords();
+          }
+
+          this.nextWord();
         },
         // https://github.com/coolaj86/knuth-shuffle
         // Apache License 2.0
-        shuffle: function(array) {
-            var currentIndex = array.length, temporaryValue, randomIndex;
+        shuffle: function (array) {
+          var currentIndex = array.length, temporaryValue, randomIndex;
 
-            // While there remain elements to shuffle...
-            while (0 !== currentIndex) {
+          // While there remain elements to shuffle...
+          while (0 !== currentIndex) {
 
-                // Pick a remaining element...
-                randomIndex = Math.floor(Math.random() * currentIndex);
-                currentIndex -= 1;
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
 
-                // And swap it with the current element.
-                temporaryValue = array[currentIndex];
-                array[currentIndex] = array[randomIndex];
-                array[randomIndex] = temporaryValue;
-            }
-            return array;
+            // And swap it with the current element.
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+          }
+          return array;
         }
       }
     })
   </script>
 </body>
+
 </html>
