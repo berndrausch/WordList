@@ -2,20 +2,31 @@
 <html>
 
 <head>
-  <title>My first Vue app</title>
-  <!-- <script src="https://unpkg.com/vue"></script> -->
+  <title>Wordlist</title>
   <script src="vue.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
   <div id="app">
-    <p>{{ currentWord }}</p>
-    <button v-if="startVisible" v-on:click="start">Start</button>
-    <button v-if="nextVisible" v-on:click="next(true)" style=background-color:green>Next</button>
-    <button v-if="nextVisible" v-on:click="next(false)" style=background-color:red>Next</button>
-    <button v-if="nextVisible" v-on:click="restart">Restart</button>
-    <p>Solved: {{ solved }}</p>
-    <p>Skipped: {{ skipped }}</p>
+    <button class="startbutton" v-if="startVisible" v-on:click="start">Start</button>
+    <button class="startbutton" v-if="restartVisible" v-on:click="restart">Restart</button>
+    <p id="word" class="hcenter">{{ currentWord }}</p>
+    <p class="hcenter buttonrow">
+      <button class="nextbutton green" v-on:click="next(true)">Next</button>
+      <button class="nextbutton red" v-on:click="next(false)">Next</button>
+    </p>
+
+    <table class="hcenter">
+      <tr>
+          <th>Solved</th>
+          <th>Skipped</th>
+      </tr>
+      <tr>
+          <td>{{ solved }}</td>
+          <td>{{ skipped }}</td>
+      </tr>
+    </table>
   </div>
 
   <script>
@@ -23,7 +34,7 @@
       el: '#app',
       data: {
         startVisible: true,
-        nextVisible: false,
+        restartVisible: false,
         solved: 0,
         skipped: 0,
         currentWordIndex: 0,
@@ -36,14 +47,14 @@
           { text: 'Word 4' },
           { text: 'Word 5' },
           { text: 'Word 6' },
-          { text: 'Word 7' },
+          { text: 'Word 7 which is long because there may be long words' },
         ],
         shuffled: []
       },
       methods: {
         start: function () {
           this.startVisible = false;
-          this.nextVisible = true;
+          this.restartVisible = true;
           this.resetWords();
           this.resetCount();
           this.nextWord();
