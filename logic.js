@@ -1,11 +1,33 @@
 var app;
 
 function init() {
-  console.log("init");
-  initVuew();
+  initVue();
+  initWords();
 }
 
-function initVuew(){
+function initWords(){
+  var url = "words.txt";
+  loadWords(url, parseWords);
+}
+
+function loadWords(url, callback)
+{
+  fetch(url).then(function(response) {
+    response.text().then(callback);
+  });
+}
+
+function parseWords(text)
+{
+  var lines = text.split('\n');
+  var i = lines.length;
+  while(i--)
+  {
+    app.words.push({ text: lines[i] })
+  }
+}
+
+function initVue(){
   app = new Vue({
     el: '#app',
     data: {
@@ -15,16 +37,7 @@ function initVuew(){
       skipped: 0,
       currentWordIndex: 0,
       currentWord: 'Ready?',
-      words: [
-        { text: 'Word 0' },
-        { text: 'Word 1' },
-        { text: 'Word 2' },
-        { text: 'Word 3' },
-        { text: 'Word 4' },
-        { text: 'Word 5' },
-        { text: 'Word 6' },
-        { text: 'Word 7 which is long because there may be long words' },
-      ],
+      words: [],
       shuffled: []
     },
     methods: {
