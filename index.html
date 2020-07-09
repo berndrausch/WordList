@@ -14,8 +14,8 @@
     <button class="startbutton" v-if="restartVisible" v-on:click="restart">Restart</button>
     <p id="word" class="hcenter">{{ currentWord }}</p>
     <p class="hcenter buttonrow">
+      <button class="nextbutton red" v-on:click="next(false)">Skip</button>
       <button class="nextbutton green" v-on:click="next(true)">Next</button>
-      <button class="nextbutton red" v-on:click="next(false)">Next</button>
     </p>
 
     <table class="hcenter">
