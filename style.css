@@ -1,0 +1,72 @@
+body {
+    background-color: linen;
+    font-size: 40px;
+  }
+  
+  h1 {
+    color: maroon;
+    margin-left: 40px;
+  }
+
+  button
+  {
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      border-radius: 12px;
+  }
+
+  table, th, td {
+      border: 1px solid black;
+  }
+
+  table {
+      border-collapse: collapse;
+      width: 50%;
+  }
+
+  td {
+      width: 25%;
+      text-align: center;
+  }
+
+  .nextbutton
+  {
+      padding: 10px 20px 10px 20px;
+      margin-top: 50px;
+      margin-bottom: 50px;
+      font-size: 2em;
+      Width: 25%
+  }
+  .startbutton
+  {
+      font-size: 1em;
+  }
+
+  .nextbutton.green
+  {
+      background-color:green
+  }
+
+  .nextbutton.red
+  {
+      background-color:red
+  }
+
+  .hcenter{
+      margin: 0 auto;
+  }
+
+  .buttonrow{
+    text-align: center;
+  }
+   
+  #word { 
+      text-align: center;
+      font-size: 2em;
+      border-radius: 25px;
+      border: 2px solid darkgrey;
+      
+      width: 70%;
+      height: 40%;
+  }

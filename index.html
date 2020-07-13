@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Wordlist</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="vue.js"></script>
+  <script src="logic.js"></script>
+</head>
+
+<body onload="init()">
+  <div id="app">
+    <button class="startbutton" v-if="startVisible" v-on:click="start">Start</button>
+    <button class="startbutton" v-if="restartVisible" v-on:click="restart">Restart</button>
+    <p id="word" class="hcenter">{{ currentWord }}</p>
+    <p class="hcenter buttonrow">
+      <button class="nextbutton green" v-on:click="next(true)">Next</button>
+      <button class="nextbutton red" v-on:click="next(false)">Next</button>
+    </p>
+
+    <table class="hcenter">
+      <tr>
+          <th>Solved</th>
+          <th>Skipped</th>
+      </tr>
+      <tr>
+          <td>{{ solved }}</td>
+          <td>{{ skipped }}</td>
+      </tr>
+    </table>
+  </div>
+
+
+</body>
+
+</html>
